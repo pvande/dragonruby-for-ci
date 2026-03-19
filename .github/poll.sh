@@ -69,7 +69,7 @@ done
 if [[ "$DRY_RUN" == "false" ]]; then
   AUTH=(-H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json")
   RELEASE=$(curl -sf -X POST "${AUTH[@]}" -H "Content-Type: application/json" \
-    -d "{\"tag_name\":\"$VERSION\",\"name\":\"$VERSION\"}" \
+    -d "{\"tag_name\":\"$VERSION\",\"name\":\"DragonRuby $VERSION\",\"notes\":\"DragonRuby $VERSION CI archives\"}" \
     "https://api.github.com/repos/$GITHUB_REPOSITORY/releases")
   UPLOAD_URL=$(echo "$RELEASE" | jq -r '.upload_url' | sed 's/{?name,label}//')
   for FILE in tmp/dragonruby-for-ci-*.zip; do
