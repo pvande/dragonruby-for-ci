@@ -1,0 +1,23 @@
+name: Auto Release DragonRuby
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Poll for new release
+        env:
+          ITCH_IO_API_KEY: ${{ secrets.ITCH_IO_API_KEY }}
+          DRAGONRUBY_PRO_USERNAME: ${{ secrets.DRAGONRUBY_PRO_USERNAME }}
+          DRAGONRUBY_PRO_PASSWORD: ${{ secrets.DRAGONRUBY_PRO_PASSWORD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: bash .github/poll.sh
